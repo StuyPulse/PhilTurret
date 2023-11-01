@@ -14,4 +14,11 @@ import com.stuypulse.stuylib.network.SmartNumber;
  * We use StuyLib's SmartNumber / SmartBoolean in order to have tunable
  * values that we can edit on Shuffleboard.
  */
-public interface Settings {}
+public interface Settings {
+    double DT = 0.02;
+    public interface Turret {
+        int port = 0;
+        SmartNumber kV = new SmartNumber("Turret kV", 3);
+        SmartNumber kA = new SmartNumber("Turret kA", 0.5);
+    }
+}
