@@ -37,18 +37,18 @@ public abstract class Turret extends SubsystemBase {
         controller = new PIDController(3, 0, 0); 
     }
 
-    public abstract double getTurretAngle();
+    public abstract double getTargetAngle();
     public abstract void setTurretVoltage(double voltage);
 
-    public void setTurretAngle(double angle) {
-        targetAngle.set(angle);
+    public void setTargetAngle(double angle) {
+    targetAngle.set(angle);
     }
 
     @Override
     public final void periodic() {
         controller.update(
             targetAngle.get(), 
-            getTurretAngle()
+            getTargetAngle()
         );
 
         double output = controller.getOutput();
