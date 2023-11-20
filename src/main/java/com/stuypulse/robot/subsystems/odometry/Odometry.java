@@ -1,35 +1,38 @@
+package com.stuypulse.robot.subsystems.odometry;
+
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Odometry extends SubsystemBase {
+public abstract class Odometry extends SubsystemBase {
+    // Singleton data
     private static final Odometry instance;
 
     static {
-        instance = new Odometry();
+        instance = new OdometryImpl();
     }
 
-    public static Odometry getInstance() {
+    public static Odometry getInstance(){
         return instance;
     }
 
-    private final FieldObject2d robot;
-    private final Field2d field;
-
+    // Odometry methods
     protected Odometry() {
-        field = new Field2d();
-        robot = field.getObject("Turret Pose 2d");
-
-        SmartDashboard.putData(field);
     }
 
-    public Pose2d getPose() {
-        return robot.getPose();
+    public abstract Field2d getField();
+
+    public abstract void reset(Pose2d pose2d);
+
+    public abstract Pose2d getPose();
+
+    public final Translation2d getTranslation() {
+        return getPose().getTranslation();
     }
 
-    public Field2d getField() {
-        return field;
+    public final Rotation2d getRotation() {
+        return getPose().getRotation();
     }
 }

@@ -26,8 +26,9 @@ public abstract class Turret extends SubsystemBase {
         return instance;
     }
 
-    public Controller controller;
-    public SmartNumber targetAngle = new SmartNumber("Target Angle", 0);
+    private Controller controller;
+    private SmartNumber targetAngle = new SmartNumber("Target Angle", 120);
+    private SmartNumber fakeTargetAngle = new SmartNumber("Fake Target Angle", 0);
 
     public void stop() {
         setTurretVoltage(0);
@@ -37,24 +38,38 @@ public abstract class Turret extends SubsystemBase {
         controller = new PIDController(3, 0, 0); 
     }
 
-    public abstract double getTargetAngle();
+    public abstract double getTurretAngle();
     public abstract void setTurretVoltage(double voltage);
 
-    public void setTargetAngle(double angle) {
-    targetAngle.set(angle);
+    public void setTargetAngle(double angle, double max, double min) {
+        // closest to current angle as possible
+        double currentAngle = getTurretAngle() + (angle % 360);
+        
+        if (currentAngle > max) {
+            targetAngle.set(currentAngle - (360 * (Math.ceil(angle / 360.0))));
+        } else if (currentAngle < min) {
+            targetAngle.set(currentAngle + (360 * (Math.ceil(angle / 360))));
+        } else {
+            targetAngle.set(angle % 360);
+        }
     }
 
     @Override
     public final void periodic() {
         controller.update(
             targetAngle.get(), 
-            getTargetAngle()
+            getTurretAngle()
         );
+
+        setTargetAngle(fakeTargetAngle.get(), 300, -300);
 
         double output = controller.getOutput();
         setTurretVoltage(output);
-        SmartDashboard.putNumber("Calculated Voltage", output);
-        SmartDashboard.putNumber("Turret Angle", getTurretAngle());
+
+        //SmartDashboard.putNumber("Calculated Voltage", output);
+        SmartDashboard.putNumber("Calculated Voltage", 0);
+        SmartDashboard.putNumber("Turret Angle", 0);
+        SmartDashboard.putNumber("Target Angle", targetAngle.get());
 
         periodic2();
     }

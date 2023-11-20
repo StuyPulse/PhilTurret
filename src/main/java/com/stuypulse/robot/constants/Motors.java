@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
 /*-
  * File containing all of the configurations that different motors require.
@@ -21,6 +22,19 @@ import com.revrobotics.CANSparkMax.IdleMode;
  *  - The Open Loop Ramp Rate
  */
 public interface Motors {
+
+    int kDisableStatusFrame = 65535;
+    
+    public static void disableStatusFrames(CANSparkMax motor, int... ids) {
+        for (int id : ids) {
+            motor.setPeriodicFramePeriod(PeriodicFrame.fromId(id), kDisableStatusFrame);
+        }
+    }
+
+    public interface Swerve {
+        CANSparkMaxConfig DRIVE = new CANSparkMaxConfig(false, IdleMode.kBrake, 60, 0);
+        CANSparkMaxConfig TURN  = new CANSparkMaxConfig(false, IdleMode.kBrake, 20, 0);
+    }
 
     /** Classes to store all of the values a motor needs */
 
