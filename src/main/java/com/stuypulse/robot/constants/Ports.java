@@ -14,6 +14,10 @@ public interface Ports {
         int DEBUGGER = 2;
     }
 
+    public interface Turret {
+        int TURN = -1;
+    }
+
     public interface Swerve {
         public interface FrontRight {
             int DRIVE = 10;

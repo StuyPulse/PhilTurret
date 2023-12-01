@@ -28,36 +28,28 @@ public interface Settings {
     double DT = 0.02;
 
     public interface Turret {
-        int port = 0;
-        SmartNumber kV = new SmartNumber("Turret kV", 0.1);
-        SmartNumber kA = new SmartNumber("Turret kA", 0.01);
+        public interface Feedforward {
+            SmartNumber kV = new SmartNumber("Turret kV", 0.1);
+            SmartNumber kA = new SmartNumber("Turret kA", 0.01);
+        }
     }
 
     public interface Shooter {    
-        //Notice how the constants are grouped together in a single class, all CAPS and static
-        //think about how you would use these constants in your methods
         static double MAX_RPM = 5700.0;
         static double MIN_RPM = 100.0;
         static double MAX_RPM_CHANGE = 2000.0;
         static double MAX_RPM_ERROR = 100.0;
-        static double RING_RPM = 4000.0;
-        public interface ShooterPID {
+
+        public interface Feedback {
             double kP = 0.005;
             double kI = 0.0;
             double kD = 0.00033;
-    
-            static PIDController getController() {
-                return new PIDController(ShooterPID.kP, ShooterPID.kI, ShooterPID.kD);
-            }
         }
-        public interface ShooterFF {
+    
+        public interface Feedforward {
             double kS = 0.17118;
             double kV = 0.0020763;
             double kA = 0.00011861;
-    
-            static SimpleMotorFeedforward getController() {
-                return new SimpleMotorFeedforward(ShooterFF.kS, ShooterFF.kV, ShooterFF.kA);
-            }
         }
     }
 
