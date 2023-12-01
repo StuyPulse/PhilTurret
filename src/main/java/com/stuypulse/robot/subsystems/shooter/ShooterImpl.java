@@ -34,14 +34,8 @@ public class ShooterImpl extends Shooter {
     }   
 
     @Override
-    public double getVoltage() {
-        return motor.getAppliedOutput();
-    }
-
-    @Override
     public void periodicallyCalled() {
         SmartDashboard.putNumber("Shooter/Velocity", getVelocity());
         SmartDashboard.putNumber("Shooter/Error", getTargetRPM() - getVelocity());
-        SmartDashboard.putNumber("Shooter/Voltage", getVoltage());
     }   
 }

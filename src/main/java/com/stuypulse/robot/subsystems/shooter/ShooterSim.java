@@ -4,11 +4,12 @@ import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.LinearSystemSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSim extends Shooter {
 
-    private double velocity;
     private LinearSystemSim<N1, N1, N1> shooterSim;
 
     public ShooterSim() {
@@ -19,21 +20,21 @@ public class ShooterSim extends Shooter {
 
     @Override
     public double getVelocity() {
-        return velocity;
-    }
-
-    @Override
-    public void periodicallyCalled() {
-        velocity = getTargetRPM();
+        return Units.radiansPerSecondToRotationsPerMinute(shooterSim.getOutput(0));
     }
 
     @Override
     public void setVoltage(double voltage) {
-        return;
+        shooterSim.setInput(voltage);
     }
 
     @Override
-    public double getVoltage() {
-        return 0.0;
+    public void simulationPeriodic() {
+        shooterSim.update(Settings.DT);
+    }
+
+    @Override
+    public void periodicallyCalled() {
+        SmartDashboard.putNumber("Shooter/RPM", getVelocity());
     }
 }
