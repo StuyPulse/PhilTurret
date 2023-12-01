@@ -10,6 +10,8 @@ import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.odometry.OdometryRealign;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Motors.Swerve;
+import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.swerve.SwerveDrive;
 import com.stuypulse.robot.subsystems.swerve.evenMoreSwerve.*;
 import com.stuypulse.robot.subsystems.turret.Turret;
 import com.stuypulse.stuylib.input.Gamepad;
@@ -35,6 +37,8 @@ public class RobotContainer {
     
     // Subsystem
     public final Turret turret = Turret.getInstance();
+    public final SwerveDrive swerve = SwerveDrive.getInstance();
+    public final Shooter shooter = Shooter.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();

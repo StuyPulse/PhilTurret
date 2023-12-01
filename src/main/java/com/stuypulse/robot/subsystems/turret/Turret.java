@@ -65,8 +65,7 @@ public abstract class Turret extends SubsystemBase {
 
         double output = controller.getOutput();
         setTurretVoltage(output);
-
-        //SmartDashboard.putNumber("Calculated Voltage", output);
+            
         SmartDashboard.putNumber("Calculated Voltage", 0);
         SmartDashboard.putNumber("Turret Angle", 0);
         SmartDashboard.putNumber("Target Angle", targetAngle.get());
