@@ -25,7 +25,13 @@ public class TurretSim extends Turret {
 
         turretPose2d = Odometry.getInstance().getField().getObject("Turret Pose 2d");
 
-        turretPose2d.setPose(new Pose2d(4, 4, Rotation2d.fromDegrees(0)));
+        // turretPose2d.setPose(new Pose2d(4, 4, Rotation2d.fromDegrees(0)));
+        // turretPose2d.setPose(Odometry.getInstance().getPose());
+        turretPose2d.setPose(new Pose2d(
+            Odometry.getInstance().getTranslation(),
+            Rotation2d.fromDegrees(getTurretAngle())
+        ));
+
         SmartDashboard.putData(Odometry.getInstance().getField());
     }
 
