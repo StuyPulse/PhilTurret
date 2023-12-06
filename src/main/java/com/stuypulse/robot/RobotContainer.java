@@ -8,6 +8,7 @@ package com.stuypulse.robot;
 import com.stuypulse.robot.commands.TurretPoint;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.odometry.OdometryRealign;
+import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Motors.Swerve;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
@@ -57,6 +58,7 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         turret.setDefaultCommand(new TurretPoint (new Translation2d()));
+        swerve.setDefaultCommand(new SwerveDriveDrive(driver));
     }
 
     /***************/
