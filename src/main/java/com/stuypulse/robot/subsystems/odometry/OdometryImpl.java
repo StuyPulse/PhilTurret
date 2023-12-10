@@ -19,7 +19,7 @@ public class OdometryImpl extends Odometry {
 
     protected OdometryImpl() {
         var swerve = SwerveDrive.getInstance();
-        var startingPose = new Pose2d(0, 0, Rotation2d.fromDegrees(0));
+        var startingPose = new Pose2d(8, 4, Rotation2d.fromDegrees(0));
 
         odometry =
             new SwerveDriveOdometry(

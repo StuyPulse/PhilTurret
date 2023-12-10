@@ -12,11 +12,9 @@
           "length": 1.0
         },
         "Turret Pose 2d": {
-          "image": "/Users/edgar/Desktop/Screenshot 2023-11-17 at 2.40.01 PM.png",
           "length": 2.0,
           "width": 4.0
         },
-        "image": "/Users/edgar/Desktop/Screenshot 2023-11-06 at 5.10.11 PM.png",
         "window": {
           "visible": true
         }
@@ -24,11 +22,14 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
+    },
     "transitory": {
       "SmartDashboard": {
-        "Odometry": {
-          "open": true
-        },
         "open": true
       }
     }
