@@ -2,7 +2,7 @@ package com.stuypulse.robot.subsystems.turret;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Settings.*;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.network.SmartNumber;
@@ -42,16 +42,17 @@ public abstract class Turret extends SubsystemBase {
     public abstract double getTurretAngle();
     public abstract void setTurretVoltage(double voltage);
 
-    public void setTargetAngle(double angle, double max, double min) {
+    public void setTargetAngle(double angle, double maxTarget, double minTarget) {
         // closest to current angle as possible
-        double currentAngle = getTurretAngle() + (angle % 360);
+        double realTargetAngle = getTurretAngle() + (angle);
         
-        if (currentAngle > max) {
-            targetAngle.set(currentAngle - (360 * (Math.ceil(angle / 360.0))));
-        } else if (currentAngle < min) {
-            targetAngle.set(currentAngle + (360 * (Math.ceil(angle / 360))));
+        if (realTargetAngle > maxTarget) {
+            targetAngle.set(realTargetAngle - (360 * (Math.ceil(realTargetAngle / 360))));
+        } else if (realTargetAngle < minTarget) {
+            targetAngle.set(realTargetAngle + (360 * (Math.ceil(realTargetAngle / 360))));
         } else {
-            targetAngle.set(angle % 360);
+            // targetAngle.set(angle % 360); // originally 360
+            targetAngle.set(realTargetAngle);
         }
     }
 
@@ -62,7 +63,7 @@ public abstract class Turret extends SubsystemBase {
             getTurretAngle()
         );
 
-        setTargetAngle(fakeTargetAngle.get(), 300, -300);
+        setTargetAngle(fakeTargetAngle.get(), 360, -360);
 
         double output = controller.getOutput();
         setTurretVoltage(output);
