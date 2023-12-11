@@ -6,10 +6,13 @@
 package com.stuypulse.robot.constants;
 
 import com.pathplanner.lib.auto.PIDConstants;
+import com.stuypulse.stuylib.control.feedback.PIDController;
+// import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.math.Vector2D;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
@@ -23,10 +26,31 @@ import edu.wpi.first.math.util.Units;
 public interface Settings {
 
     double DT = 0.02;
+
     public interface Turret {
-        int port = 0;
-        SmartNumber kV = new SmartNumber("Turret kV", 0.1);
-        SmartNumber kA = new SmartNumber("Turret kA", 0.01);
+        public interface Feedforward {
+            SmartNumber kV = new SmartNumber("Turret kV", 0.1);
+            SmartNumber kA = new SmartNumber("Turret kA", 0.01);
+        }
+    }
+
+    public interface Shooter {    
+        static double MAX_RPM = 5700.0;
+        static double MIN_RPM = 100.0;
+        static double MAX_RPM_CHANGE = 2000.0;
+        static double MAX_RPM_ERROR = 100.0;
+
+        public interface Feedback {
+            double kP = 0.005;
+            double kI = 0.0;
+            double kD = 0.00033;
+        }
+    
+        public interface Feedforward {
+            double kS = 0.17118;
+            double kV = 0.0020763;
+            double kA = 0.00011861;
+        }
     }
 
     public interface Swerve {
@@ -154,4 +178,5 @@ public interface Settings {
     public static Vector2D vpow(Vector2D vec, double power) {
         return vec.mul(Math.pow(vec.magnitude(), power - 1));
     }
+    
 }

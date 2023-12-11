@@ -1,6 +1,5 @@
 package com.stuypulse.robot.commands;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
 import com.stuypulse.robot.subsystems.turret.Turret;
 
@@ -32,7 +31,8 @@ public class TurretPoint extends CommandBase {
             turret.setTargetAngle(0, 360, -360);
         }
 
-        else {turret.setTargetAngle(
+        else {
+            turret.setTargetAngle(
             (180 + Math.toDegrees(
                 Math.atan((robotPose.getY() - target.getY()) / (robotPose.getX() - target.getX()))
             )), 180, -180

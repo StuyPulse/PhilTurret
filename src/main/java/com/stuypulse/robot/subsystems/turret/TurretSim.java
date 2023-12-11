@@ -20,12 +20,18 @@ public class TurretSim extends Turret {
 
     public TurretSim() {
         turretSim = new LinearSystemSim<N2, N1, N1>(
-            LinearSystemId.identifyPositionSystem(Settings.Turret.kV.get(), Settings.Turret.kA.get())
+            LinearSystemId.identifyPositionSystem(Settings.Turret.Feedforward.kV.get(), Settings.Turret.Feedforward.kA.get())
         );
 
         turretPose2d = Odometry.getInstance().getField().getObject("Turret Pose 2d");
 
-        turretPose2d.setPose(new Pose2d(4, 4, Rotation2d.fromDegrees(0)));
+        // turretPose2d.setPose(new Pose2d(4, 4, Rotation2d.fromDegrees(0)));
+        // turretPose2d.setPose(Odometry.getInstance().getPose());
+        turretPose2d.setPose(new Pose2d(
+            Odometry.getInstance().getTranslation(),
+            Rotation2d.fromDegrees(getTurretAngle())
+        ));
+
         SmartDashboard.putData(Odometry.getInstance().getField());
     }
 

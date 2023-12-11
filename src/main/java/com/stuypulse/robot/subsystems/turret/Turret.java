@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.turret;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
@@ -15,7 +16,7 @@ public abstract class Turret extends SubsystemBase {
     
     static {
         if(Robot.isReal()) {
-            instance = new TurretImpl(Settings.Turret.port);
+            instance = new TurretImpl(Ports.Turret.TURN);
         }
         else {
             instance = new TurretSim();
@@ -65,8 +66,7 @@ public abstract class Turret extends SubsystemBase {
 
         double output = controller.getOutput();
         setTurretVoltage(output);
-
-        //SmartDashboard.putNumber("Calculated Voltage", output);
+            
         SmartDashboard.putNumber("Calculated Voltage", 0);
         SmartDashboard.putNumber("Turret Angle", 0);
         SmartDashboard.putNumber("Target Angle", targetAngle.get());
