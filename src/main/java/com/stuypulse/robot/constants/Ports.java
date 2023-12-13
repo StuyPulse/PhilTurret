@@ -18,6 +18,10 @@ public interface Ports {
         int TURN = -1;
     }
 
+    public interface Shooter {
+        int MOTOR = -1;
+    }
+
     public interface Swerve {
         public interface FrontRight {
             int DRIVE = 10;

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.stuypulse.robot.constants.Ports;
 
 /**
  * ShooterImpl class contains the hardware logic for the Shooter class.
@@ -14,13 +15,14 @@ import com.revrobotics.RelativeEncoder;
  * @author Richie Xue 
  */
 public class ShooterImpl extends Shooter {
+
     private final CANSparkMax motor;
     private final RelativeEncoder encoder;
 
     public ShooterImpl() {
         super();
 
-        this.motor = new CANSparkMax(1, CANSparkMax.MotorType.kBrushless);
+        this.motor = new CANSparkMax(Ports.Shooter.MOTOR, CANSparkMax.MotorType.kBrushless);
         this.encoder = motor.getEncoder();
     }
 
@@ -35,7 +37,7 @@ public class ShooterImpl extends Shooter {
 
     @Override
     public void periodicallyCalled() {
-        SmartDashboard.putNumber("Shooter/Velocity", getVelocity());
+        SmartDashboard.putNumber("Shooter/RPM", getVelocity());
         SmartDashboard.putNumber("Shooter/Error", getTargetRPM() - getVelocity());
     }   
 }
