@@ -44,15 +44,15 @@ public abstract class Turret extends SubsystemBase {
 
     public void setTargetAngle(double angle, double maxTarget, double minTarget) {
         // closest to current angle as possible
-        double realTargetAngle = getTurretAngle() + (angle);
-        
-        if (realTargetAngle > maxTarget) {
-            targetAngle.set(realTargetAngle - (360 * (Math.ceil(realTargetAngle / 360))));
-        } else if (realTargetAngle < minTarget) {
-            targetAngle.set(realTargetAngle + (360 * (Math.ceil(realTargetAngle / 360))));
-        } else {
-            // targetAngle.set(angle % 360); // originally 360
-            targetAngle.set(realTargetAngle);
+
+        if (angle > maxTarget) {
+            targetAngle.set(angle % maxTarget);
+        }
+        if (angle < minTarget) {
+            targetAngle.set(angle % minTarget);
+        } 
+        else {
+            targetAngle.set(angle % 360);
         }
     }
 

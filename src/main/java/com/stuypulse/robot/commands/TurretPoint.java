@@ -12,7 +12,7 @@ public class TurretPoint extends CommandBase {
     private final Turret turret;
     private final Odometry odometry;
 
-    // private Translation2d target;
+    private Translation2d target;
 
     public TurretPoint(Translation2d target) {
         //this.target = target;
