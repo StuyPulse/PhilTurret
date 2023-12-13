@@ -2,6 +2,7 @@ package com.stuypulse.robot.subsystems.turret;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Ports.Gamepad;
 import com.stuypulse.robot.constants.Settings.*;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
@@ -29,7 +30,6 @@ public abstract class Turret extends SubsystemBase {
 
     private Controller controller;
     private SmartNumber targetAngle = new SmartNumber("Target Angle", 120);
-    private SmartNumber fakeTargetAngle = new SmartNumber("Fake Target Angle", 0);
 
     public void stop() {
         setTurretVoltage(0);
@@ -63,7 +63,6 @@ public abstract class Turret extends SubsystemBase {
             getTurretAngle()
         );
 
-        setTargetAngle(fakeTargetAngle.get(), 360, -360);
 
         double output = controller.getOutput();
         setTurretVoltage(output);

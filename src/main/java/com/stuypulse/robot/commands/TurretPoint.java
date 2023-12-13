@@ -15,7 +15,7 @@ public class TurretPoint extends CommandBase {
     private Translation2d target;
 
     public TurretPoint(Translation2d target) {
-        //this.target = target;
+        this.target = target;
 
         turret = Turret.getInstance();
         odometry = Odometry.getInstance();
@@ -27,25 +27,13 @@ public class TurretPoint extends CommandBase {
     public final void execute() {
         Pose2d robotPose = odometry.getPose();
 
-        // if ((Math.abs(robotPose.getX()) < .0000001) && (Math.abs(target.getX()) < .0000001)) {
-        //     turret.setTargetAngle(0, 360, -360);
-        // }
-        if (Math.abs(robotPose.getX()) < .0000001) {
-            if (robotPose.getY() < .0000001) {
-                turret.setTargetAngle(0, 360, -360);
-            }
-            else {
-                turret.setTargetAngle(
-            Math.atan(robotPose.getX() / robotPose.getY())    
-            , 360, -360);
-            }
+        if ((Math.abs(robotPose.getX()) < .0000001) && (Math.abs(target.getX()) < .0000001)) {
+            turret.setTargetAngle(0, 360, -360);
         }
-
         else {
             turret.setTargetAngle(
             (Math.toDegrees(
-                // Math.atan((robotPose.getY() - target.getY()) / (robotPose.getX() - target.getX()))
-                Math.atan(robotPose.getY() / robotPose.getX())
+                Math.atan((robotPose.getY() - target.getY()) / (robotPose.getX() - target.getX()))
             )), 360, -360
             );
         }
