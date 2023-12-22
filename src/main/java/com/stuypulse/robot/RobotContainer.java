@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
 
@@ -65,6 +66,9 @@ public class RobotContainer {
     private void configureDriverBindings() {
 
         // swerve
+
+        // turret
+        driver.getLeftButton().onTrue(new TurretPoint(new Translation2d(0, 0))); // change the button later lol
 
         // left bumper -> robot relative
 
