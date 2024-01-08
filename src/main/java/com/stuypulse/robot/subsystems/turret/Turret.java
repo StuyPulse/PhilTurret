@@ -55,7 +55,7 @@ public abstract class Turret extends SubsystemBase {
             deltaRotations = +Math.ceil(-(angle - minTarget) / 360.0);
         }
 
-        targetAngle.set(angle + deltaRotations * 360);
+        targetAngle.set(angle + deltaRotations * 36);
     }
 
     @Override

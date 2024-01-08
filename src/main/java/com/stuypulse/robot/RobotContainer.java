@@ -68,7 +68,7 @@ public class RobotContainer {
         // swerve
 
         // turret
-        driver.getLeftButton().onTrue(new TurretPoint(new Translation2d(0, 0))); // change the button later lol
+        // driver.getLeftButton().whileTrue(new TurretPoint(new Translation2d(0, 0))); // change the button later lol
 
         // left bumper -> robot relative
 
