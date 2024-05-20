@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.shooter;
 
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Settings.Shooter.Feedforward;
 
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -14,7 +15,7 @@ public class ShooterSim extends Shooter {
 
     public ShooterSim() {
         shooterSim = new LinearSystemSim<N1, N1, N1>(
-            LinearSystemId.identifyVelocitySystem(Settings.Shooter.Feedforward.kV, Settings.Shooter.Feedforward.kA)
+            LinearSystemId.identifyVelocitySystem(Feedforward.kV, Feedforward.kA)
         );
     }
 

@@ -6,13 +6,10 @@
 package com.stuypulse.robot.constants;
 
 import com.pathplanner.lib.auto.PIDConstants;
-import com.stuypulse.stuylib.control.feedback.PIDController;
-// import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.math.Vector2D;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
@@ -28,9 +25,18 @@ public interface Settings {
     double DT = 0.02;
 
     public interface Turret {
+        int MIN_ANGLE = -135;
+        int MAX_ANGLE = +135;
+
+        public interface Feedback {
+            SmartNumber kP = new SmartNumber("Turret/kP", 3.0);
+            SmartNumber kI = new SmartNumber("Turret/kI", 0.0);
+            SmartNumber kD = new SmartNumber("Turret/kD", 0.0);
+        }
+
         public interface Feedforward {
-            SmartNumber kV = new SmartNumber("Turret kV", 0.1);
-            SmartNumber kA = new SmartNumber("Turret kA", 0.01);
+            SmartNumber kV = new SmartNumber("Turret/kV", 0.1);
+            SmartNumber kA = new SmartNumber("Turret/kA", 0.01);
         }
     }
 

@@ -5,29 +5,23 @@
 
 package com.stuypulse.robot;
 
-import com.stuypulse.robot.commands.TurretPoint;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.odometry.OdometryRealign;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
+import com.stuypulse.robot.commands.turret.TurretPoint;
 import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.constants.Motors.Swerve;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.SwerveDrive;
 import com.stuypulse.robot.subsystems.swerve.evenMoreSwerve.*;
 import com.stuypulse.robot.subsystems.turret.Turret;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
-import com.stuypulse.stuylib.network.SmartBoolean;
 
-import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
@@ -57,7 +51,7 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-        turret.setDefaultCommand(new TurretPoint (new Translation2d()));
+        turret.setDefaultCommand(new TurretPoint(new Translation2d(5, 5)));
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
     }
 
@@ -72,6 +66,9 @@ public class RobotContainer {
     private void configureDriverBindings() {
 
         // swerve
+
+        // turret
+        // driver.getLeftButton().whileTrue(new TurretPoint(new Translation2d(0, 0))); // change the button later lol
 
         // left bumper -> robot relative
 

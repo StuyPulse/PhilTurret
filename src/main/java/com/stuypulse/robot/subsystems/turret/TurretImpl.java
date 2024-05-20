@@ -7,8 +7,8 @@ import com.revrobotics.SparkMaxAbsoluteEncoder;
 
 public class TurretImpl extends Turret {
 
-    private CANSparkMax motor;
-    private SparkMaxAbsoluteEncoder encoder;
+    private final CANSparkMax motor;
+    private final SparkMaxAbsoluteEncoder encoder;
 
     public TurretImpl(int port) {
         motor = new CANSparkMax(port, MotorType.kBrushless);

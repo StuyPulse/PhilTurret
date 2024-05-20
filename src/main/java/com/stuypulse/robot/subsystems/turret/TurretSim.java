@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.turret;
 
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Settings.Turret.Feedforward;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
 
 import edu.wpi.first.math.MathUtil;
@@ -15,18 +16,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurretSim extends Turret {
 
-    private LinearSystemSim<N2, N1, N1> turretSim;
+    private final LinearSystemSim<N2, N1, N1> turretSim;
     private final FieldObject2d turretPose2d;
 
     public TurretSim() {
         turretSim = new LinearSystemSim<N2, N1, N1>(
-            LinearSystemId.identifyPositionSystem(Settings.Turret.Feedforward.kV.get(), Settings.Turret.Feedforward.kA.get())
+            LinearSystemId.identifyPositionSystem(Feedforward.kV.get(), Feedforward.kA.get())
         );
 
         turretPose2d = Odometry.getInstance().getField().getObject("Turret Pose 2d");
 
-        // turretPose2d.setPose(new Pose2d(4, 4, Rotation2d.fromDegrees(0)));
-        // turretPose2d.setPose(Odometry.getInstance().getPose());
         turretPose2d.setPose(new Pose2d(
             Odometry.getInstance().getTranslation(),
             Rotation2d.fromDegrees(getTurretAngle())

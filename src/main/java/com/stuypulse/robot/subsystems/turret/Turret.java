@@ -3,6 +3,8 @@ package com.stuypulse.robot.subsystems.turret;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Settings.Turret.Feedback;
+import com.stuypulse.robot.subsystems.swerve.SwerveDrive;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.network.SmartNumber;
@@ -15,7 +17,7 @@ public abstract class Turret extends SubsystemBase {
     public static final Turret instance;
     
     static {
-        if(Robot.isReal()) {
+        if (Robot.isReal()) {
             instance = new TurretImpl(Ports.Turret.TURN);
         }
         else {
@@ -27,34 +29,39 @@ public abstract class Turret extends SubsystemBase {
         return instance;
     }
 
-    private Controller controller;
-    private SmartNumber targetAngle = new SmartNumber("Target Angle", 120);
-    private SmartNumber fakeTargetAngle = new SmartNumber("Fake Target Angle", 0);
-
-    public void stop() {
-        setTurretVoltage(0);
-    }
+    private final SmartNumber targetAngle;
+    private final Controller controller;
 
     public Turret() {
-        controller = new PIDController(3, 0, 0); 
+        controller = new PIDController(Feedback.kP, Feedback.kI, Feedback.kD); 
+
+        targetAngle = new SmartNumber("Turret/Target Angle", 0);
     }
 
     public abstract double getTurretAngle();
     public abstract void setTurretVoltage(double voltage);
 
-    public void setTargetAngle(double angle, double max, double min) {
-        // closest to current angle as possible
-        double currentAngle = getTurretAngle() + (angle % 360);
-        
-        if (currentAngle > max) {
-            targetAngle.set(currentAngle - (360 * (Math.ceil(angle / 360.0))));
-        } else if (currentAngle < min) {
-            targetAngle.set(currentAngle + (360 * (Math.ceil(angle / 360))));
-        } else {
-            targetAngle.set(angle % 360);
-        }
+    public void stop() {
+        setTurretVoltage(0);
     }
 
+    public void setTargetAngle(double angle, double minTarget, double maxTarget) {
+        // keep in mind that this assumes that the minimum angle is 360, when it very
+        // much could be less, in which case I'll change it in like 5 minutes lol
+
+        // // number of rotations needed to bring angle back in (min, max) range
+        double deltaRotations = 0;
+
+        if (angle > maxTarget) {
+            deltaRotations = -Math.ceil((angle - maxTarget) / 180.0); // minimum number of turns possible to reach it
+        }
+        else if (angle < minTarget) {
+            deltaRotations = +Math.ceil(-(angle - minTarget) / 180.0);
+        }
+
+        targetAngle.set(angle + deltaRotations * 360); // 360 makes sure that right side of robot is tracking
+    }
+    
     @Override
     public final void periodic() {
         controller.update(
@@ -62,19 +69,15 @@ public abstract class Turret extends SubsystemBase {
             getTurretAngle()
         );
 
-        setTargetAngle(fakeTargetAngle.get(), 300, -300);
-
         double output = controller.getOutput();
         setTurretVoltage(output);
-            
-        SmartDashboard.putNumber("Calculated Voltage", 0);
-        SmartDashboard.putNumber("Turret Angle", 0);
-        SmartDashboard.putNumber("Target Angle", targetAngle.get());
+
+        SmartDashboard.putNumber("Turret/Calculated Voltage (V)", output);
+        SmartDashboard.putNumber("Turret/Angle (deg)", getTurretAngle());
 
         periodic2();
     }
 
     public abstract void periodic2();
-
 }
 

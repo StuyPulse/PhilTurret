@@ -1,10 +1,13 @@
-package com.stuypulse.robot.commands;
+package com.stuypulse.robot.commands.turret;
 
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
 import com.stuypulse.robot.subsystems.turret.Turret;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurretPoint extends CommandBase {
@@ -14,11 +17,16 @@ public class TurretPoint extends CommandBase {
 
     private Translation2d target;
 
+    private FieldObject2d targetPose;
+
     public TurretPoint(Translation2d target) {
         this.target = target;
 
         turret = Turret.getInstance();
         odometry = Odometry.getInstance();
+
+        targetPose = Odometry.getInstance().getField().getObject("Turret Target Pose");
+        targetPose.setPose(new Pose2d(target, new Rotation2d()));
 
         addRequirements(turret);
     }
@@ -27,17 +35,11 @@ public class TurretPoint extends CommandBase {
     public final void execute() {
         Pose2d robotPose = odometry.getPose();
 
-        if ((Math.abs(robotPose.getX()) < .001) && (Math.abs(target.getX()) < .001)) {
-            turret.setTargetAngle(0, 360, -360);
-        }
-
-        else {
-            turret.setTargetAngle(
-            (180 + Math.toDegrees(
-                Math.atan((robotPose.getY() - target.getY()) / (robotPose.getX() - target.getX()))
-            )), 180, -180
-            );
-        }
+        turret.setTargetAngle(
+            Math.toDegrees(Math.atan2(target.getY() - robotPose.getY() , target.getX() - robotPose.getX())),
+            Settings.Turret.MIN_ANGLE,
+            Settings.Turret.MAX_ANGLE
+        );
     }
 
     @Override
