@@ -4,6 +4,7 @@ import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Turret.Feedback;
+import com.stuypulse.robot.subsystems.swerve.SwerveDrive;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.network.SmartNumber;
@@ -45,19 +46,22 @@ public abstract class Turret extends SubsystemBase {
     }
 
     public void setTargetAngle(double angle, double minTarget, double maxTarget) {
-        // number of rotations needed to bring angle back in (min, max) range
+        // keep in mind that this assumes that the minimum angle is 360, when it very
+        // much could be less, in which case I'll change it in like 5 minutes lol
+
+        // // number of rotations needed to bring angle back in (min, max) range
         double deltaRotations = 0;
 
         if (angle > maxTarget) {
-            deltaRotations = -Math.ceil((angle - maxTarget) / 360.0);
+            deltaRotations = -Math.ceil((angle - maxTarget) / 180.0); // minimum number of turns possible to reach it
         }
         else if (angle < minTarget) {
-            deltaRotations = +Math.ceil(-(angle - minTarget) / 360.0);
+            deltaRotations = +Math.ceil(-(angle - minTarget) / 180.0);
         }
 
-        targetAngle.set(angle + deltaRotations * 36);
+        targetAngle.set(angle + deltaRotations * 360); // 360 makes sure that right side of robot is tracking
     }
-
+    
     @Override
     public final void periodic() {
         controller.update(
