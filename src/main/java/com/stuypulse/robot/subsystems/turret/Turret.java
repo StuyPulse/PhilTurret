@@ -4,9 +4,9 @@ import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Turret.Feedback;
-import com.stuypulse.robot.subsystems.swerve.SwerveDrive;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
+import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,7 +33,8 @@ public abstract class Turret extends SubsystemBase {
     private final Controller controller;
 
     public Turret() {
-        controller = new PIDController(Feedback.kP, Feedback.kI, Feedback.kD); 
+        controller = new MotorFeedforward(Settings.Turret.Feedforward.kS, Settings.Turret.Feedforward.kV, Settings.Turret.Feedforward.kA).position()
+        .add(new PIDController(Feedback.kP, Feedback.kI, Feedback.kD)); 
 
         targetAngle = new SmartNumber("Turret/Target Angle", 0);
     }
@@ -45,21 +46,17 @@ public abstract class Turret extends SubsystemBase {
         setTurretVoltage(0);
     }
 
-    public void setTargetAngle(double angle, double minTarget, double maxTarget) {
+    public void setTargetAngle(double angle) {
+
         // keep in mind that this assumes that the minimum angle is 360, when it very
         // much could be less, in which case I'll change it in like 5 minutes lol
 
-        // // number of rotations needed to bring angle back in (min, max) range
-        double deltaRotations = 0;
-
-        if (angle > maxTarget) {
-            deltaRotations = -Math.ceil((angle - maxTarget) / 180.0); // minimum number of turns possible to reach it
+        if (angle < 0) {
+            targetAngle.set(angle + 360);
         }
-        else if (angle < minTarget) {
-            deltaRotations = +Math.ceil(-(angle - minTarget) / 180.0);
+        else {
+            targetAngle.set(angle % 360);
         }
-
-        targetAngle.set(angle + deltaRotations * 360); // 360 makes sure that right side of robot is tracking
     }
     
     @Override
@@ -68,6 +65,13 @@ public abstract class Turret extends SubsystemBase {
             targetAngle.get(), 
             getTurretAngle()
         );
+
+        if (targetAngle.get() < 0) {
+            targetAngle.set(targetAngle.get() + 360);
+        }
+        if (targetAngle.get() < Settings.Turret.MAX_ANGLE) {
+            targetAngle.set(targetAngle.get() % 360);
+        }
 
         double output = controller.getOutput();
         setTurretVoltage(output);

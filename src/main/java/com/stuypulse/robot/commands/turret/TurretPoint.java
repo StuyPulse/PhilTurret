@@ -36,9 +36,7 @@ public class TurretPoint extends CommandBase {
         Pose2d robotPose = odometry.getPose();
 
         turret.setTargetAngle(
-            Math.toDegrees(Math.atan2(target.getY() - robotPose.getY() , target.getX() - robotPose.getX())),
-            Settings.Turret.MIN_ANGLE,
-            Settings.Turret.MAX_ANGLE
+            Math.toDegrees(Math.atan2(target.getY() - robotPose.getY() , target.getX() - robotPose.getX()))
         );
     }
 

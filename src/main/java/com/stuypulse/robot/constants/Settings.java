@@ -25,8 +25,8 @@ public interface Settings {
     double DT = 0.02;
 
     public interface Turret {
-        int MIN_ANGLE = -135;
-        int MAX_ANGLE = +135;
+        int MIN_ANGLE = 0;
+        int MAX_ANGLE = +360;
 
         public interface Feedback {
             SmartNumber kP = new SmartNumber("Turret/kP", 3.0);
@@ -35,6 +35,7 @@ public interface Settings {
         }
 
         public interface Feedforward {
+            SmartNumber kS = new SmartNumber("Turret/kS", 0.0);
             SmartNumber kV = new SmartNumber("Turret/kV", 0.1);
             SmartNumber kA = new SmartNumber("Turret/kA", 0.01);
         }
