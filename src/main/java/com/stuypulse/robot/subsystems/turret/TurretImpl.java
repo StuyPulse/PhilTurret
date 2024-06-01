@@ -13,6 +13,7 @@ public class TurretImpl extends Turret {
     public TurretImpl(int port) {
         motor = new CANSparkMax(port, MotorType.kBrushless);
         encoder = motor.getAbsoluteEncoder(Type.kDutyCycle);
+        encoder.setPositionConversionFactor(-1); //TODO: figure out the conversion factor
     }
 
     @Override
@@ -25,9 +26,12 @@ public class TurretImpl extends Turret {
         motor.setVoltage(voltage);
     }
 
+    public boolean isStalling() {
+        return motor.getOutputCurrent() > 40;
+    }
+
     @Override
     public void periodic2() {
-        
     }
 }
 

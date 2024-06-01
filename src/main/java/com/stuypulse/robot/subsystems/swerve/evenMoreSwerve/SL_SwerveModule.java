@@ -13,7 +13,6 @@ import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 import com.stuypulse.stuylib.math.Angle;
 import com.stuypulse.stuylib.streams.angles.filters.ARateLimit;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.constants.Settings.Swerve.Drive;
@@ -91,7 +90,7 @@ public class SL_SwerveModule extends SwerveModule {
         Motors.disableStatusFrames(driveMotor, 3, 4, 5, 6);
 
         driveController = new PIDController(Drive.kP, Drive.kI, Drive.kD)
-                .setOutputFilter(x -> true ? 0 : x)
+                .setOutputFilter(x -> true ? 0 : x) //XXX: This doesnt work
             .add(new MotorFeedforward(Drive.kS, Drive.kV, Drive.kA).velocity());
 
         targetState = new SwerveModuleState();

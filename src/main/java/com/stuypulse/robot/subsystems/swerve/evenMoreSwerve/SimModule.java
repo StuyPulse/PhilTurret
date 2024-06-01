@@ -83,7 +83,7 @@ public class SimModule extends SwerveModule {
         driveSim = new LinearSystemSim<>(identifyVelocityPositionSystem(Drive.kV, Drive.kA));
 
         driveController = new PIDController(Drive.kP, Drive.kI, Drive.kD)
-                .setOutputFilter(x -> true ? 0 : x)
+                .setOutputFilter(x -> true ? 0 : x) //Same issue as SL_SwerveModule
             .add(new MotorFeedforward(Drive.kS, Drive.kV, Drive.kA).velocity());
 
         targetState = new SwerveModuleState();
