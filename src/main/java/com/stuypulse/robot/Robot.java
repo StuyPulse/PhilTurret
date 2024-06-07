@@ -88,4 +88,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testExit() {}
+
+    public static boolean isBlue() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isBlue'");
+    }
 }

@@ -1,6 +1,5 @@
 package com.stuypulse.robot.commands.turret;
 
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
 import com.stuypulse.robot.subsystems.turret.Turret;
 

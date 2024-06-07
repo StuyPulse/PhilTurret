@@ -17,7 +17,8 @@ public class TurretImpl extends Turret {
 
     @Override
     public double getTurretAngle() {
-        return encoder.getPosition();
+        return encoder.getPosition() / 50;
+        // divide by 50 because encoder gear to turret gear conversion factor is 1:50
     }
 
     @Override

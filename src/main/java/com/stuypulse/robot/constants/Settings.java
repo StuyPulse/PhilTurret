@@ -24,6 +24,9 @@ public interface Settings {
 
     double DT = 0.02;
 
+    double WIDTH = Units.inchesToMeters(32);
+    double LENGTH = Units.inchesToMeters(36);
+
     public interface Turret {
         int MIN_ANGLE = 0;
         int MAX_ANGLE = +360;
