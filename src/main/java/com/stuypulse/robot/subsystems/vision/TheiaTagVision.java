@@ -1,3 +1,9 @@
+/************************ PROJECT IZZI *************************/
+/* Copyright (c) 2024 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
+
 package com.stuypulse.robot.subsystems.vision;
 
 import com.stuypulse.robot.constants.Cameras;
@@ -64,12 +70,9 @@ public class TheiaTagVision extends AprilTagVision {
         super.periodic();
 
         outputs.clear();
-
-        boolean hasAnyData = false;
-
+        
         for (TheiaCamera camera : cameras) {
-            if (camera.getVisionData().isPresent())
-                hasAnyData = true;
+            SmartDashboard.putBoolean(camera.getName() + "/Has Data", camera.getVisionData().isPresent());
 
             camera.getVisionData().ifPresent(
                 (VisionData data) -> {
@@ -78,7 +81,7 @@ public class TheiaTagVision extends AprilTagVision {
                 });
         }
 
-        SmartDashboard.putBoolean("Vision/Has Any Data", hasAnyData);
+        SmartDashboard.putBoolean("Vision/Has Any Data", outputs.size() > 0);
     }
 
     private void updateTelemetry(String prefix, VisionData data) {

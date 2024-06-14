@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
 
+    public static final String ROBOT = null;
     private RobotContainer robot;
     private Command auto;
 

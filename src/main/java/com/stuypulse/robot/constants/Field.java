@@ -2,7 +2,6 @@ package com.stuypulse.robot.constants;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
-import com.stuypulse.stuylib.network.SmartNumber;
 import com.stuypulse.robot.util.vision.AprilTag;
 
 import edu.wpi.first.math.geometry.Pose2d;

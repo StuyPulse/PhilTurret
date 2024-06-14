@@ -5,7 +5,7 @@
 
 package com.stuypulse.robot.constants;
 
-import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.util.PIDConstants;
 import com.stuypulse.stuylib.math.Vector2D;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
@@ -21,6 +21,30 @@ import edu.wpi.first.math.util.Units;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+
+    // checks the current RIO's serial number to determine which robot is running
+    public enum RobotType {
+        JIM("03262B9F"),
+        TUMBLER("0305A69D"),
+        IZZI("032B4BC2"),
+        SIM("");
+
+        public final String serialNum;
+
+        RobotType(String serialNum) {
+            this.serialNum = serialNum;
+        }
+
+        public static RobotType fromString(String serialNum) {
+            for (RobotType robot : RobotType.values()) {
+                if (robot.serialNum.equals(serialNum.toUpperCase())) {
+                    return robot;
+                }
+            }
+
+            return RobotType.SIM;
+        }
+    }
 
     double DT = 0.02;
 

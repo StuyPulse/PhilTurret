@@ -7,9 +7,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class TurretPoint extends CommandBase {
+public class TurretPoint extends Command {
 
     private final Turret turret;
     private final Odometry odometry;

@@ -13,7 +13,6 @@ import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 import com.stuypulse.stuylib.math.Angle;
 import com.stuypulse.stuylib.streams.angles.filters.ARateLimit;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.constants.Settings.Swerve.Drive;
@@ -27,12 +26,11 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 
 
@@ -45,7 +43,7 @@ public class SL_SwerveModule extends SwerveModule {
 
     // turn
     private final CANSparkMax turnMotor;
-    private final SparkMaxAbsoluteEncoder absoluteEncoder;
+    private final AbsoluteEncoder absoluteEncoder;
 
     // drive
     private final CANSparkMax driveMotor;
@@ -67,7 +65,7 @@ public class SL_SwerveModule extends SwerveModule {
         turnMotor = new CANSparkMax(turnCANId, MotorType.kBrushless);
 
         // double check this
-        absoluteEncoder = turnMotor.getAbsoluteEncoder(Type.kDutyCycle);
+        absoluteEncoder = turnMotor.getAbsoluteEncoder();
         absoluteEncoder.setPositionConversionFactor(Encoder.Turn.POSITION_CONVERSION);
         absoluteEncoder.setVelocityConversionFactor(Encoder.Turn.VELOCITY_CONVERSION);
         absoluteEncoder.setZeroOffset(0.0);
@@ -91,7 +89,7 @@ public class SL_SwerveModule extends SwerveModule {
         Motors.disableStatusFrames(driveMotor, 3, 4, 5, 6);
 
         driveController = new PIDController(Drive.kP, Drive.kI, Drive.kD)
-                .setOutputFilter(x -> true ? 0 : x)
+                .setOutputFilter(x -> (double) 0) /* old filter (x -> true ? 0 : x)*/
             .add(new MotorFeedforward(Drive.kS, Drive.kV, Drive.kA).velocity());
 
         targetState = new SwerveModuleState();

@@ -14,11 +14,16 @@
           "length": 1.0
         },
         "Turret Pose 2d": {
-          "image": "/Users/edgar/Desktop/Screenshot 2023-11-17 at 2.40.01 PM.png",
           "length": 2.0,
           "width": 4.0
         },
+        "bottom": 1476,
+        "height": 8.210550308227539,
         "image": "/Users/edgar/Desktop/Screenshot 2023-11-06 at 5.10.11 PM.png",
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
         "window": {
           "visible": true
         }
@@ -40,6 +45,9 @@
         "open": true
       }
     }
+  },
+  "NetworkTables Info": {
+    "visible": true
   },
   "Plot": {
     "Plot <0>": {

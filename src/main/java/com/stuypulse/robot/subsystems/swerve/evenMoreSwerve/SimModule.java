@@ -18,7 +18,7 @@ import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.constants.Settings.Swerve.Drive;
 import com.stuypulse.robot.constants.Settings.Swerve.Turn;
 
-import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.MatBuilder;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -46,10 +46,10 @@ public class SimModule extends SwerveModule {
           }
 
           return new LinearSystem<N2, N1, N2>(
-              Matrix.mat(Nat.N2(), Nat.N2()).fill(0.0, 1.0, 0.0, -kV / kA),
-              Matrix.mat(Nat.N2(), Nat.N1()).fill(0.0, 1.0 / kA),
-              Matrix.mat(Nat.N2(), Nat.N2()).fill(1.0, 0.0, 0.0, 1.0),
-              Matrix.mat(Nat.N2(), Nat.N1()).fill(0.0, 0.0));
+              MatBuilder.fill(Nat.N2(), Nat.N2(), 0.0, 1.0, 0.0, -kV / kA),
+              MatBuilder.fill(Nat.N2(), Nat.N1(), 0.0, 1.0 / kA),
+              MatBuilder.fill(Nat.N2(), Nat.N2(), 1.0, 0.0, 0.0, 1.0),
+              MatBuilder.fill(Nat.N2(), Nat.N1(), 0.0, 0.0));
     }
 
     // module data
@@ -83,7 +83,7 @@ public class SimModule extends SwerveModule {
         driveSim = new LinearSystemSim<>(identifyVelocityPositionSystem(Drive.kV, Drive.kA));
 
         driveController = new PIDController(Drive.kP, Drive.kI, Drive.kD)
-                .setOutputFilter(x -> true ? 0 : x)
+                .setOutputFilter(x -> (double) 0) //used to be (x -> true ? 0 : x)
             .add(new MotorFeedforward(Drive.kS, Drive.kV, Drive.kA).velocity());
 
         targetState = new SwerveModuleState();
