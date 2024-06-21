@@ -2,7 +2,7 @@ package com.stuypulse.robot.subsystems.turret;
 
 import com.revrobotics.CANSparkMax;
 
-import javax.swing.JButton;
+// import javax.swing.JButton;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -23,13 +23,13 @@ public class TurretImpl extends Turret {
         // divide by 50 because encoder gear to turret gear conversion factor is 1:50
     }
 
-    private final JButton bumpSwitch = new JButton();
+    // private final JButton bumpSwitch = new JButton();
 
-    public void hardstop(){
-        if (bumpSwitch.isEnabled()){
-            motor.setVoltage(0);
-        }
-    }
+    // public void hardstop(){
+    //     if (bumpSwitch.isEnabled()){
+    //         motor.setVoltage(0);
+    //     }
+    // }
     
     @Override
     public void setTurretVoltage(double voltage) {
