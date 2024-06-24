@@ -52,10 +52,10 @@ public abstract class Turret extends SubsystemBase {
         // much could be less, in which case I'll change it in like 5 minutes lol
 
         if (angle < 0) {
-            targetAngle.set(angle + 360);
+            targetAngle.set(angle + 300);
         }
         else {
-            targetAngle.set(angle % 360);
+            targetAngle.set(angle % 300);
         }
     }
     
@@ -67,10 +67,10 @@ public abstract class Turret extends SubsystemBase {
         );
 
         if (targetAngle.get() < 0) {
-            targetAngle.set(targetAngle.get() + 360);
+            targetAngle.set(targetAngle.get() + 300);
         }
         if (targetAngle.get() < Settings.Turret.MAX_ANGLE) {
-            targetAngle.set(targetAngle.get() % 360);
+            targetAngle.set(targetAngle.get() % 300);
         }
 
         double output = controller.getOutput();

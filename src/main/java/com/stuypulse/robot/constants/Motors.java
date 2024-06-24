@@ -7,7 +7,7 @@ package com.stuypulse.robot.constants;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+// import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
@@ -34,6 +34,10 @@ public interface Motors {
     public interface Swerve {
         CANSparkMaxConfig DRIVE = new CANSparkMaxConfig(false, IdleMode.kBrake, 60, 0);
         CANSparkMaxConfig TURN  = new CANSparkMaxConfig(false, IdleMode.kBrake, 20, 0);
+    }
+
+    public interface Turret {
+        CANSparkMaxConfig TURRET_MOTOR = new CANSparkMaxConfig(false, IdleMode.kBrake, 60, 0);
     }
 
     /** Classes to store all of the values a motor needs */
@@ -74,30 +78,30 @@ public interface Motors {
         }
     }
 
-    public static class VictorSPXConfig {
-        public final boolean INVERTED;
-        public final NeutralMode NEUTRAL_MODE;
-        public final double OPEN_LOOP_RAMP_RATE;
+    // public static class VictorSPXConfig {
+    //     public final boolean INVERTED;
+    //     public final NeutralMode NEUTRAL_MODE;
+    //     public final double OPEN_LOOP_RAMP_RATE;
 
-        public VictorSPXConfig(
-                boolean inverted,
-                NeutralMode neutralMode,
-                double openLoopRampRate) {
-            this.INVERTED = inverted;
-            this.NEUTRAL_MODE = neutralMode;
-            this.OPEN_LOOP_RAMP_RATE = openLoopRampRate;
-        }
+    //     public VictorSPXConfig(
+    //             boolean inverted,
+    //             NeutralMode neutralMode,
+    //             double openLoopRampRate) {
+    //         this.INVERTED = inverted;
+    //         this.NEUTRAL_MODE = neutralMode;
+    //         this.OPEN_LOOP_RAMP_RATE = openLoopRampRate;
+    //     }
 
-        public VictorSPXConfig(boolean inverted, NeutralMode neutralMode) {
-            this(inverted, neutralMode, 0.0);
-        }
+    //     public VictorSPXConfig(boolean inverted, NeutralMode neutralMode) {
+    //         this(inverted, neutralMode, 0.0);
+    //     }
 
-        public void configure(WPI_VictorSPX motor) {
-            motor.setInverted(INVERTED);
-            motor.setNeutralMode(NEUTRAL_MODE);
-            motor.configOpenloopRamp(OPEN_LOOP_RAMP_RATE);
-        }
-    }
+    //     public void configure(WPI_VictorSPX motor) {
+    //         motor.setInverted(INVERTED);
+    //         motor.setNeutralMode(NEUTRAL_MODE);
+    //         motor.configOpenloopRamp(OPEN_LOOP_RAMP_RATE);
+    //     }
+    // }
 
     public static class CANSparkMaxConfig {
         public final boolean INVERTED;

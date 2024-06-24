@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.turret;
 
 import com.revrobotics.CANSparkMax;
+import com.stuypulse.robot.constants.Motors;
 
 // import javax.swing.JButton;
 
@@ -15,6 +16,8 @@ public class TurretImpl extends Turret {
     public TurretImpl(int port) {
         motor = new CANSparkMax(port, MotorType.kBrushless);
         encoder = motor.getAbsoluteEncoder();
+
+        Motors.Turret.TURRET_MOTOR.configure(motor);
     }
 
     @Override
