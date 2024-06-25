@@ -3,6 +3,8 @@ package com.stuypulse.robot.subsystems.turret;
 import com.revrobotics.CANSparkMax;
 import com.stuypulse.robot.constants.Motors;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+
 // import javax.swing.JButton;
 
 import com.revrobotics.AbsoluteEncoder;
@@ -18,6 +20,18 @@ public class TurretImpl extends Turret {
         encoder = motor.getAbsoluteEncoder();
 
         Motors.Turret.TURRET_MOTOR.configure(motor);
+    }
+
+    DigitalInput bumpSwitch = new DigitalInput(0);
+
+    public boolean bumpSwitchState() {
+        return bumpSwitch.get();
+    }
+
+    public void bumpSwitchStop(){
+    if (bumpSwitchState() == false){
+        setTurretVoltage(0);
+        }
     }
 
     @Override

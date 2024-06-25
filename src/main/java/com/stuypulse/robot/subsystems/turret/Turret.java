@@ -7,6 +7,7 @@ import com.stuypulse.robot.constants.Settings.Turret.Feedback;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
+import com.stuypulse.stuylib.math.SLMath;
 import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -67,7 +68,7 @@ public abstract class Turret extends SubsystemBase {
         );
 
         if (targetAngle.get() < 0) {
-            targetAngle.set(targetAngle.get() + 300);
+            targetAngle.set(Math.abs(targetAngle.get()) % 300);
         }
         if (targetAngle.get() < Settings.Turret.MAX_ANGLE) {
             targetAngle.set(targetAngle.get() % 300);
